@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $color-accent: #d12d35;
 $color-dark: #161616;
 $color-white: #fff;
@@ -56,13 +58,13 @@ h3 {
   margin: 0;
 }
 
+html:has(.page__menu:target) {
+  overflow: hidden;
+}
+
 /* Page */
 .page {
   overflow-x: hidden;
-
-  &:has(.page__menu:target) {
-    overflow: hidden;
-  }
 
   &__footer {
     position: sticky;
@@ -121,11 +123,11 @@ h3 {
     padding: 25px 20px;
 
     @media (min-width: 744px) {
-      padding: 32px 72px;
+      padding: 50px 72px;
     }
 
     @media (min-width: 1260px) {
-      padding: 32px 121px;
+      padding: 50px 121px;
     }
   }
 
@@ -148,6 +150,9 @@ h3 {
   }
 
   &__close {
+    position: fixed;
+    top: 25px;
+    right: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,9 +160,15 @@ h3 {
     height: 24px;
     transition: opacity $transition;
 
-    @media (min-width: 1260px) {
+    @media (min-width: 744px) {
+      top: 50px;
+      right: 72px;
       width: 32px;
       height: 32px;
+    }
+
+    @media (min-width: 1260px) {
+      right: calc(max(0px, (100vw - 1260px) / 2) + 120px);
     }
 
     &:hover {
@@ -387,15 +398,21 @@ h3 {
   }
 
   &__phone-dropdown {
-    position: absolute;
-    top: calc(100% + 12px);
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity $transition;
+    display: none;
+
+    @media (min-width: 1260px) {
+      display: flex;
+      position: absolute;
+      right: calc(100% + 16px);
+      top: 50%;
+      transform: translateY(-50%);
+      flex-direction: column;
+      gap: 4px;
+      text-align: right;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity $transition;
+    }
   }
 
   &__phone-wrapper {
@@ -937,6 +954,10 @@ h3 {
 
     &::placeholder {
       color: $color-placeholder;
+    }
+
+    &:hover {
+      outline: 1px solid color.adjust($color-input-bg, $lightness: -15%);
     }
 
     &:focus {
